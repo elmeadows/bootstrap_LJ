@@ -26,21 +26,47 @@ class Boot_CI():
         self.boot_stat = []
         self.ci_level = .95
 
-        
+    #method for counting simulations    
     def add_sims(self):
+         """
+        Calculates number of simulations and appends statistic chosen by user
+
+        Parameters
+        ------
+        n: int
+            length of sample used in bootstrap.
+        boot_sample: list
+            Sample used within bootstrap.
+
+        Returns
+        -------
+        None.
+
+        """
+        #assigns "n" (int) to length of sample data
         n = len(self.dat)
+
+        #for i within number of times bootstrap sample runs
         for i in range(self.n_boot):
+            #establishes sample for bootstrap as "boot_sample" (list)
             boot_sample = self.dat.sample(n, replace = True)
             
+            #if chosen statistic is median
             if self.stat == "median":
+                #append "boot_sample" median to "boot_stat" (list)
                 self.boot_stat.append(float(boot_sample.median()))
-                
+            
+            #else/if chosen statistic is mean
             elif self.stat == "mean":
+                #append "boot_sample" mean to "boot_stat" (list)
                 self.boot_stat.append(float(boot_sample.mean()))
-                
+            
+            #else/if chosen statistic is standard deviation
             elif self.stat == "std dev":
+                #append "boot_sample" standard deviation to "boot_stat" (list)
                 self.boot_stat.append(float(boot_sample.std()))
-                
+            
+            #else give User communicating an incorrect chosen statistic 
             else: 
                 raise TypeError("Wrong Statistic name")
                 
